@@ -13,17 +13,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        submodules: true
     
     - name: Install packages
       run: |
-        wget https://dav.sunnycase.moe/d/ci/tina-V83x-dl.tar.xz
+        wget -q https://dav.sunnycase.moe/d/ci/tina-V83x-dl.tar.xz
         tar xf tina-V83x-dl.tar.xz
-    
-    - name: Setup environment
-      run: source build/envsetup.sh
       
     - name: Build v831-MaixII_Dock
       run: |
+        source build/envsetup.sh
         lunch 4
         make defconfig
         make
