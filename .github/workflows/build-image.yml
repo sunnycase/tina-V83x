@@ -1,0 +1,30 @@
+name: build-image
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install packages
+      run: |
+        wget https://dav.sunnycase.moe/d/ci/tina-V83x-dl.tar.xz
+        tar xf tina-V83x-dl.tar.xz
+    
+    - name: Setup environment
+      run: source build/envsetup.sh
+      
+    - name: Build v831-MaixII_Dock
+      run: |
+        lunch 4
+        make defconfig
+        make
+        pack
