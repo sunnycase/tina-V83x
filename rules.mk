@@ -423,16 +423,12 @@ endef
 # Execute commands under flock
 # $(1) => The shell expression.
 # $(2) => The lock name. If not given, the global lock will be used.
-ifneq ($(wildcard $(STAGING_DIR_HOST)/bin/flock),)
-  define locked
-	SHELL= \
-	flock \
-		$(TMP_DIR)/.$(if $(2),$(strip $(2)),global).flock \
-		-c '$(subst ','\'',$(1))'
-  endef
-else
-  locked=$(1)
-endif
+define locked
+SHELL= \
+flock \
+	$(TMP_DIR)/.$(if $(2),$(strip $(2)),global).flock \
+	-c '$(subst ','\'',$(1))'
+endef
 
 # Recursively copy paths into another directory, purge dangling
 # symlinks before.

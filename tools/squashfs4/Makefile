@@ -7,11 +7,11 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=squashfs4
-PKG_VERSION:=4.3
+PKG_VERSION:=4.5.1
 
 PKG_SOURCE:=squashfs$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=@SF/squashfs
-PKG_MD5SUM:=d92ab59aabf5173f2a59089531e30dbf
+PKG_MD5SUM:=399513f5dbfbf2ceec52db0b1b30f648
 PKG_CAT:=zcat
 
 HOST_BUILD_DIR:=$(COMPILE_DIR_HOST)/squashfs$(PKG_VERSION)

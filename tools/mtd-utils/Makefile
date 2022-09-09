@@ -7,9 +7,9 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=mtd-utils
-PKG_VERSION:=1.5.2
+PKG_VERSION:=2.1.4
 
-PKG_SOURCE_VERSION:=aea36417067dade75192bafa03af70b6eb2677b1
+PKG_SOURCE_VERSION:=c7f1bfa44a84d02061787e2f6093df5cc40b9f5c
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 PKG_SOURCE_URL:=git://git.infradead.org/mtd-utils.git
 PKG_SOURCE_PROTO:=git
@@ -21,7 +21,25 @@ HOST_BUILD_DIR:=$(COMPILE_DIR_HOST)/$(PKG_NAME)-$(PKG_VERSION)
 
 include $(BUILD_DIR)/host-build.mk
 
-HOST_CFLAGS += -I$(STAGING_DIR_HOST)/include/e2fsprogs
+HOST_CONFIGURE_ARGS += \
+    --without-xattr \
+	--without-lzo
+
+define Host/Configure
+	$(if $(HOST_CONFIGURE_PARALLEL),+)(cd $(HOST_BUILD_DIR)/$(3); \
+		$(BASH) ./autogen.sh && \
+		if [ -x configure ]; then \
+			$(CP) $(SCRIPT_DIR)/config.{guess,sub} $(HOST_BUILD_DIR)/$(3)/ && \
+			$(2) \
+			$(HOST_CONFIGURE_CMD) \
+			$(HOST_CONFIGURE_VARS) \
+			$(HOST_CONFIGURE_ARGS) \
+			$(1); \
+		fi \
+	)
+endef
+
+HOST_CFLAGS += -I$(STAGING_DIR_HOST)/include/e2fsprogs -I$(STAGING_DIR_HOST)/include/libuuid
 CFLAGS := $(HOST_CFLAGS) -I$(HOST_BUILD_DIR)/include -L$(HOST_BUILD_DIR) -L$(STAGING_DIR_HOST)/lib -DNO_NATIVE_SUPPORT
 ifneq ($(HOST_OS),Linux)
 CFLAGS += -Dloff_t=off_t -D__BYTE_ORDER=BYTE_ORDER -include getline.h -include endian.h -I$(CURDIR)/include -include fls.h
@@ -48,8 +66,8 @@ endef
 define Host/Install
 	$(CP) \
 		$(HOST_BUILD_DIR)/mkfs.jffs2 \
-		$(HOST_BUILD_DIR)/mkfs.ubifs/mkfs.ubifs \
-		$(HOST_BUILD_DIR)/ubi-utils/ubinize \
+		$(HOST_BUILD_DIR)/mkfs.ubifs \
+		$(HOST_BUILD_DIR)/ubinize \
 		$(STAGING_DIR_HOST)/bin/
 endef
 
