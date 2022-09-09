@@ -21,9 +21,5 @@ HOST_BUILD_PARALLEL:=1
 
 include $(BUILD_DIR)/host-build.mk
 
-define Host/Install
-	$(MAKE) -C $(HOST_BUILD_DIR) install
-endef
-
 $(eval $(call HostBuild))
 
