@@ -39,7 +39,7 @@ define Host/Configure
 	)
 endef
 
-HOST_CFLAGS += -I$(STAGING_DIR_HOST)/include/e2fsprogs -I$(STAGING_DIR_HOST)/include/uuid
+HOST_CFLAGS += -I$(STAGING_DIR_HOST)/include/e2fsprogs -I$(STAGING_DIR_HOST)/include/e2fsprogs/uuid
 CFLAGS := $(HOST_CFLAGS) -I$(HOST_BUILD_DIR)/include -L$(HOST_BUILD_DIR) -L$(STAGING_DIR_HOST)/lib -DNO_NATIVE_SUPPORT
 ifneq ($(HOST_OS),Linux)
 CFLAGS += -Dloff_t=off_t -D__BYTE_ORDER=BYTE_ORDER -include getline.h -include endian.h -I$(CURDIR)/include -include fls.h
