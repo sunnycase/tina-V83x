@@ -55,14 +55,14 @@ $(curdir)/mpc/compile := $(curdir)/mpfr/install $(curdir)/gmp/install
 $(curdir)/mpfr/compile := $(curdir)/gmp/install
 $(curdir)/ppl/compile := $(curdir)/gmp/install
 $(curdir)/cloog/compile := $(curdir)/ppl/install
-$(curdir)/mtd-utils/compile := $(curdir)/e2fsprogs/install $(curdir)/xz/install $(curdir)/zstd/install $(curdir)/libuuid/install
+$(curdir)/mtd-utils/compile := $(curdir)/e2fsprogs/install $(curdir)/xz/install $(curdir)/zstd/install
 $(curdir)/mkimage/compile := $(curdir)/sed/install
 $(curdir)/mklibs/compile := $(curdir)/libtool/install
 $(curdir)/upslug2/compile := $(curdir)/libtool/install
 $(curdir)/mm-macros/compile := $(curdir)/libtool/install
 $(curdir)/missing-macros/compile := $(curdir)/autoconf/install
 ifeq ($(CONFIG_USE_SELINUX),)
-$(curdir)/e2fsprogs/compile := $(curdir)/libtool/install
+$(curdir)/e2fsprogs/compile := $(curdir)/libtool/install $(curdir)/libuuid/install
 else
 $(curdir)/e2fsprogs/compile := $(curdir)/libtool/install $(curdir)/selinux/install
 endif
