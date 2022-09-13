@@ -55,7 +55,7 @@ $(curdir)/mpc/compile := $(curdir)/mpfr/install $(curdir)/gmp/install
 $(curdir)/mpfr/compile := $(curdir)/gmp/install
 $(curdir)/ppl/compile := $(curdir)/gmp/install
 $(curdir)/cloog/compile := $(curdir)/ppl/install
-$(curdir)/mtd-utils/compile := $(curdir)/e2fsprogs/install $(curdir)/xz/install
+$(curdir)/mtd-utils/compile := $(curdir)/e2fsprogs/install $(curdir)/xz/install $(curdir)/zstd/install $(curdir)/libuuid/install
 $(curdir)/mkimage/compile := $(curdir)/sed/install
 $(curdir)/mklibs/compile := $(curdir)/libtool/install
 $(curdir)/upslug2/compile := $(curdir)/libtool/install
@@ -81,6 +81,7 @@ $(curdir)/lzop/compile := $(curdir)/lzo/install
 #$(curdir)/bsdiff/compile := $(curdir)/bsdiff/install
 $(curdir)/pcre/compile := $(curdir)/libtool/install
 $(curdir)/selinux/compile := $(curdir)/pcre/install
+$(curdir)/libuuid/compile := $(curdir)/libtool/install
 
 ifneq ($(CONFIG_CCACHE)$(CONFIG_SDK),)
 $(foreach tool, $(filter-out patch,$(tools-y)), $(eval $(curdir)/$(tool)/compile += $(curdir)/ccache/install))
