@@ -353,10 +353,13 @@ function lunch
     # With this environment variable new GCC can apply colors to warnings/errors
     export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
+    echo "1"
     rm -rf tmp
+    echo "2"
 
     [ -e $T/target/allwinner/${TARGET_BOARD}/${TARGET_PRODUCT}-setup.sh ] \
         && source $T/target/allwinner/${TARGET_BOARD}/${TARGET_PRODUCT}-setup.sh
+    echo "3"
 }
 
 # Tab completion for lunch.
