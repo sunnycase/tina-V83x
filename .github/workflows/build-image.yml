@@ -24,7 +24,7 @@ jobs:
     - name: Build v831-MaixII_Dock
       run: |
         source build/envsetup.sh
-        lunch 3
+        lunch v831_MaixII_Dock-tina
         cp .ci/v831-MaixII_Dock.config .config
         make
         pack
