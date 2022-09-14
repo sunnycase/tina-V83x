@@ -28,3 +28,10 @@ jobs:
         cp .ci/v831-MaixII_Dock.config .config
         make
         pack
+      
+    - name: Pack v831-MaixII_Dock
+      uses: actions/upload-artifact@v2.2.2
+      with:
+        name: tina_v831-MaixII_Dock
+        path: ${{github.workspace}}/out/v831-MaixII_Dock/tina_v831-MaixII_Dock_uart0.img
+        if-no-files-found: error

@@ -1823,5 +1823,6 @@ if [ "x${PACK_TAR_IMAGE}" = "xtar_image" ]; then
 	do_pack_partition_file ${ROOT_DIR}/image/sys_partition.fex
 fi
 
-[ -e ${PACK_TOPDIR}/scripts/.hooks/post-pack ] &&
+if [ -e ${PACK_TOPDIR}/scripts/.hooks/post-pack ]; then
 	source ${PACK_TOPDIR}/scripts/.hooks/post-pack
+fi
