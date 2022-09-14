@@ -1,0 +1,37 @@
+name: build-image
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: true
+    
+    - name: Install packages
+      run: |
+        wget -q https://dav.sunnycase.moe/d/ci/tina-V83x-dl.tar.xz
+        tar xf tina-V83x-dl.tar.xz
+      
+    - name: Build v831-MaixII_Dock
+      run: |
+        source build/envsetup.sh
+        lunch v831_MaixII_Dock-tina
+        cp .ci/v831-MaixII_Dock.config .config
+        make
+        pack
+      
+    - name: Pack v831-MaixII_Dock
+      uses: actions/upload-artifact@v2.2.2
+      with:
+        name: tina_v831-MaixII_Dock
+        path: ${{github.workspace}}/out/v831-MaixII_Dock/tina_v831-MaixII_Dock_uart0.img
+        if-no-files-found: error

@@ -24,7 +24,7 @@ ifeq ($(CONFIG_EXTERNAL_TOOLCHAIN),)
   endif
 endif
 tools-$(BUILD_TOOLCHAIN) += gmp mpfr mpc libelf expat
-tools-y += m4 libtool autoconf automake flex bison pkg-config sed mklibs flux zlib zstd libuuid
+tools-y += m4 libtool autoconf automake flex bison pkg-config sed mklibs flux zlib zstd
 tools-y += sstrip make-ext4fs e2fsprogs mtd-utils mkimage
 tools-y += firmware-utils patch-image patch quilt padjffs2
 tools-y += mm-macros missing-macros xz cmake scons bc findutils gengetopt patchelf
@@ -55,7 +55,7 @@ $(curdir)/mpc/compile := $(curdir)/mpfr/install $(curdir)/gmp/install
 $(curdir)/mpfr/compile := $(curdir)/gmp/install
 $(curdir)/ppl/compile := $(curdir)/gmp/install
 $(curdir)/cloog/compile := $(curdir)/ppl/install
-$(curdir)/mtd-utils/compile := $(curdir)/e2fsprogs/install $(curdir)/xz/install
+$(curdir)/mtd-utils/compile := $(curdir)/e2fsprogs/install $(curdir)/xz/install $(curdir)/zstd/install
 $(curdir)/mkimage/compile := $(curdir)/sed/install
 $(curdir)/mklibs/compile := $(curdir)/libtool/install
 $(curdir)/upslug2/compile := $(curdir)/libtool/install
@@ -81,6 +81,7 @@ $(curdir)/lzop/compile := $(curdir)/lzo/install
 #$(curdir)/bsdiff/compile := $(curdir)/bsdiff/install
 $(curdir)/pcre/compile := $(curdir)/libtool/install
 $(curdir)/selinux/compile := $(curdir)/pcre/install
+$(curdir)/libuuid/compile := $(curdir)/libtool/install
 
 ifneq ($(CONFIG_CCACHE)$(CONFIG_SDK),)
 $(foreach tool, $(filter-out patch,$(tools-y)), $(eval $(curdir)/$(tool)/compile += $(curdir)/ccache/install))
@@ -93,9 +94,6 @@ $(foreach tool, $(tools-y), $(if $(wildcard $(curdir)/$(tool)/patches),$(eval $(
 
 $(foreach tool, $(tools-y), $(eval $(curdir)/$(tool)/compile += $(curdir)/tar/install))
 tools-y += tar
-
-$(curdir)/tar/compile := $(curdir)/flock/install
-tools-y += flock
 
 $(curdir)/builddirs := $(tools-y) $(tools-dep) $(tools-)
 $(curdir)/builddirs-default := $(tools-y)
